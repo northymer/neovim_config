@@ -43,6 +43,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -161,15 +163,6 @@ require('lazy').setup({
     },
   },
 
-  -- {
-    -- Theme inspired by Atom
-    -- 'navarasu/onedark.nvim',
-    -- priority = 1000,
-    -- config = function()
-      --vim.cmd.colorscheme 'onedark'
-    -- end,
-  --},
-  
   {
     -- Catpucchin theme
     "catppuccin/nvim",
@@ -236,6 +229,7 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -248,7 +242,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -320,6 +314,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.cmd("Neotree position=current")
+  end,
+})
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -365,7 +365,7 @@ local function live_grep_git_root()
   local git_root = find_git_root()
   if git_root then
     require('telescope.builtin').live_grep({
-      search_dirs = {git_root},
+      search_dirs = { git_root },
     })
   end
 end
