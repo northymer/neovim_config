@@ -61,6 +61,7 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
+vim.opt.showtabline = 2
 
 -- [[ Configure plugins ]]
 -- NOTE: Here is where you install your plugins.
@@ -123,7 +124,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -393,6 +394,29 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 vim.keymap.set('n', '<leader>gg', ':LazyGit<cr>', { desc = 'Lazygit' })
 
+
+
+-- if is_available "smart-splits.nvim" then
+--   vim.keymap.set('n', )["<C-h>"] = { function() require("smart-splits").move_cursor_left() end, desc = "Move to left split" }
+--   vim.keymap.set('n', )["<C-j>"] = { function() require("smart-splits").move_cursor_down() end, desc = "Move to below split" }
+--   vim.keymap.set('n', )["<C-k>"] = { function() require("smart-splits").move_cursor_up() end, desc = "Move to above split" }
+--   vim.keymap.set('n', )["<C-l>"] = { function() require("smart-splits").move_cursor_right() end, desc = "Move to right split" }
+--   vim.keymap.set('n', )["<C-Up>"] = { function() require("smart-splits").resize_up() end, desc = "Resize split up" }
+--   vim.keymap.set('n', )["<C-Down>"] = { function() require("smart-splits").resize_down() end, desc = "Resize split down" }
+--   vim.keymap.set('n', )["<C-Left>"] = { function() require("smart-splits").resize_left() end, desc = "Resize split left" }
+--   vim.keymap.set('n', )["<C-Right>"] = { function() require("smart-splits").resize_right() end, desc = "Resize split right" }
+-- else
+vim.keymap.set('n', "<C-h>", "<C-w>h", { desc = "Move to left split" })
+vim.keymap.set('n', "<C-j>", "<C-w>j", { desc = "Move to below split" })
+vim.keymap.set('n', "<C-k>", "<C-w>k", { desc = "Move to above split" })
+vim.keymap.set('n', "<C-l>", "<C-w>l", { desc = "Move to right split" })
+vim.keymap.set('n', "<C-Up>", "<cmd>resize -2<CR>", { desc = "Resize split up" })
+vim.keymap.set('n', "<C-Down>", "<cmd>resize +2<CR>", { desc = "Resize split down" })
+vim.keymap.set('n', "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Resize split left" })
+vim.keymap.set('n', "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Resize split right" })
+vim.keymap.set('n', '<leader>po', ':Neotree toggle<cr>', { desc = "Toggle Neotree sidebar" })
+-- end
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
@@ -542,6 +566,7 @@ require('which-key').register {
   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>p'] = { name = '[P]roject', _ = 'which_key_ignore' },
 }
 
 -- mason-lspconfig requires that these setup functions are called in this order
@@ -573,6 +598,7 @@ local servers = {
       -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
+  tsserver = {}
 }
 
 -- Setup neovim lua configuration

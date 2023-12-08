@@ -15,7 +15,7 @@ return {
       close_if_last_window = true,
       sources = { "filesystem", "buffers", "git_status" },
       window = {
-        width = 30,
+        width = 40,
         mappings = {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
           ["[b"] = "prev_source",
@@ -36,6 +36,9 @@ return {
         follow_current_file = { enabled = true },
         hijack_netrw_behavior = "open_current",
         use_libuv_file_watcher = true,
+        filtered_items = {
+          visible = true,
+        }
       },
       event_handlers = {
         {
